@@ -1,0 +1,120 @@
+#include <iostream>
+#include <math.h>
+#include <iomanip>
+
+using namespace std;
+
+class binary
+{
+    public: binary();
+            int Add();
+            int Sub();
+            int multi();
+            int input();
+    private : int rem,i;
+              unsigned int a,b;
+};
+int decimal(unsigned int);
+long long Binary(int);
+
+
+int main()
+{
+ binary A;
+ A.multi();
+}
+
+binary::binary()
+{
+    int rem = i = 1;
+
+}
+
+int binary::input()
+{
+        cout<<"Please enter a binary number: ";
+        cin>>a;
+        cout<<"Please enter another binary number: ";
+        cin>>b;
+        return 0;
+}
+
+int binary::Add()
+{
+    int temp1, temp2,bin, add;
+    input();
+
+    temp1 = decimal(a);
+    temp2 = decimal(b);
+
+
+        add = temp1 + temp2;
+        bin = Binary(add);
+
+        cout << "Sum of " << a << " & " << b << " is:\n\t\t" << bin<<" which is "<<add<<endl;
+        return bin;
+    }
+
+
+
+
+
+int binary::Sub()
+{
+    int temp1, temp2, bin, sub;
+   input();
+    temp1 = decimal(a);
+    temp2 = decimal(b);
+    if (temp1 < temp2)
+        cout << "Invalid Input.....";
+    else
+    {
+        sub = temp1 - temp2;
+        bin = Binary(sub);
+
+        cout << "DIFFERENCE of " << a << " & " << b<< " is:\n\t\t" << bin<<" which is "<<sub<<endl;
+    }
+    return bin;
+}
+
+int binary::multi()
+{
+  input();
+   int temp1, temp2,bin, prod;
+
+    temp1 = decimal(a);
+    temp2 = decimal(b);
+
+
+        prod = temp1 * temp2;
+        bin = Binary(prod);
+
+        cout << "Product of " << a << " & " << b << " is:\n\t\t" << bin<<" which is "<<prod<<endl;
+        return bin;
+
+}
+int decimal(unsigned int num)
+{
+    int rem, decimal = 0, i = 0;
+    while (num > 0)
+    {
+        rem = num % 10;
+        decimal = decimal + (rem*  pow(2, i));
+        i++;
+        num /= 10;
+    }
+    return decimal;
+}
+long long Binary(int num)
+{
+    int rem;
+    long long binary = 0, i = 1;
+    do
+    {
+        rem = num % 2;
+        binary = binary + (i*rem);
+        num = num / 2;
+        i = i * 10;
+    } while (num>0);
+    return binary;
+}
