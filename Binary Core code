@@ -4,6 +4,7 @@
 
 using namespace std;
 
+//Creating object binary
 class binary
 {
     public: binary();
@@ -14,23 +15,28 @@ class binary
     private : int rem,i;
               unsigned int a,b;
 };
-int decimal(unsigned int);
-long long Binary(int);
 
 
+int decimal(unsigned int);//Binary to Decimal Function declaration
+int octal(unsigned int);//Decimal to Octal Function declaration
+long long Binary(int);// Decimal to Binary Function declaration
+void Hexa(int n);// Decimal to Hexadecimal Function declaration
+
+//Main Function(code test)
 int main()
 {
  binary A;
  A.multi();
+
 }
 
-binary::binary()
+binary::binary()//Constructor definition
 {
     int rem = i = 1;
 
 }
 
-int binary::input()
+int binary::input()//input definition
 {
         cout<<"Please enter a binary number: ";
         cin>>a;
@@ -39,32 +45,32 @@ int binary::input()
         return 0;
 }
 
-int binary::Add()
+int binary::Add()//Add Function definition
 {
     int temp1, temp2,bin, add;
-    input();
+    input();//Accepts user inputs
 
-    temp1 = decimal(a);
-    temp2 = decimal(b);
+    temp1 = decimal(a);//Temporary storage for first binary number converted to decimal
+    temp2 = decimal(b);//Temporary storage for second binary number converted to decimal
 
 
-        add = temp1 + temp2;
-        bin = Binary(add);
+        add = temp1 + temp2;//Adding two decimal numbers
+        bin = Binary(add);//Converting result to binary
 
-        cout << "Sum of " << a << " & " << b << " is:\n\t\t" << bin<<" which is "<<add<<endl;
+        cout << "Sum of " << a << " & " << b << " is:\n\t\t" << bin<<" which is "<<add<<endl;//Output binary
         return bin;
     }
 
 
 
-
-
+//Subtraction Function definition
 int binary::Sub()
 {
     int temp1, temp2, bin, sub;
    input();
     temp1 = decimal(a);
     temp2 = decimal(b);
+    //Ensuring no negative numbers
     if (temp1 < temp2)
         cout << "Invalid Input.....";
     else
@@ -77,22 +83,30 @@ int binary::Sub()
     return bin;
 }
 
+//Multiplication Function definition
 int binary::multi()
 {
   input();
-   int temp1, temp2,bin, prod;
+   int temp1, temp2,temp3,temp4,bin, prod;
 
     temp1 = decimal(a);
     temp2 = decimal(b);
+    temp3 = octal(temp1);//Octal conversion test
+
+
 
 
         prod = temp1 * temp2;
         bin = Binary(prod);
 
-        cout << "Product of " << a << " & " << b << " is:\n\t\t" << bin<<" which is "<<prod<<endl;
+        cout << "Product of " << a << " & " << b << " is:\n\t\t" << bin<<" which is "<<prod<<" also "<<temp3<<" and ";
+        Hexa(temp1);//Hexadecimal conversion test
+
         return bin;
 
 }
+
+//Converting Binary to Decimal Function
 int decimal(unsigned int num)
 {
     int rem, decimal = 0, i = 0;
@@ -105,6 +119,22 @@ int decimal(unsigned int num)
     }
     return decimal;
 }
+
+//Converting Decimal to Octal Function
+int octal(unsigned int num)
+{
+   int rem, octal=0,i=1;
+   while (num != 0)
+    {
+     octal += (num % 8)*i;
+     num /= 8;
+     i*=10;//i=i*10
+    }
+    return octal;
+
+}
+
+//Converting Decimal to Binary Function
 long long Binary(int num)
 {
     int rem;
@@ -118,3 +148,37 @@ long long Binary(int num)
     } while (num>0);
     return binary;
 }
+
+//Converting Decimal to Hexadecimal Function
+void Hexa(int n)
+{
+    // char array to store hexadecimal number
+    char hexaDeciNum[100];
+
+    // counter for hexadecimal number array
+    int i = 0;
+    while (n != 0) {
+        // temporary variable to store remainder
+        int temp = 0;
+
+        // storing remainder in temp variable.
+        temp = n % 16;
+
+        // check if temp < 10
+        if (temp < 10) {
+            hexaDeciNum[i] = temp + 48;
+            i++;
+        }
+        else {
+            hexaDeciNum[i] = temp + 55;
+            i++;
+        }
+
+        n = n / 16;
+    }
+
+    // printing hexadecimal number array in reverse order
+    for (int j = i - 1; j >= 0; j--)
+        cout << hexaDeciNum[j];
+}
+
