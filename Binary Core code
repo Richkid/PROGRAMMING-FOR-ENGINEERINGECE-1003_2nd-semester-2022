@@ -12,6 +12,8 @@ class binary
             int Sub();
             int multi();
             int input();
+            friend binary operator +(binary x, binary y);
+
     private : int rem,i;
               unsigned int a,b;
 };
@@ -25,8 +27,13 @@ void Hexa(int n);// Decimal to Hexadecimal Function declaration
 //Main Function(code test)
 int main()
 {
- binary A;
- A.multi();
+binary A,B,C;
+
+ C= A + B ;
+
+ //A.multi();
+ //cout<<endl;
+ //A.Add();
 
 }
 
@@ -40,8 +47,8 @@ int binary::input()//input definition
 {
         cout<<"Please enter a binary number: ";
         cin>>a;
-        cout<<"Please enter another binary number: ";
-        cin>>b;
+       // cout<<"Please enter another binary number: ";
+        //cin>>b;
         return 0;
 }
 
@@ -91,16 +98,17 @@ int binary::multi()
 
     temp1 = decimal(a);
     temp2 = decimal(b);
-    temp3 = octal(temp1);//Octal conversion test
+
 
 
 
 
         prod = temp1 * temp2;
         bin = Binary(prod);
+        temp3 = octal(prod);//Octal conversion test
 
         cout << "Product of " << a << " & " << b << " is:\n\t\t" << bin<<" which is "<<prod<<" also "<<temp3<<" and ";
-        Hexa(temp1);//Hexadecimal conversion test
+        Hexa(prod);//Hexadecimal conversion test
 
         return bin;
 
@@ -182,3 +190,22 @@ void Hexa(int n)
         cout << hexaDeciNum[j];
 }
 
+//Function to Overload operator +
+binary operator +(binary x, binary y)
+{
+    binary A,B,C;
+    int temp1, temp2,bin, add;
+    A.input();
+    B.input();
+
+
+    temp1 = decimal(A.a);//Temporary storage for first binary number converted to decimal
+    temp2 = decimal(B.a);//Temporary storage for second binary number converted to decimal
+
+
+        add = temp1 + temp2;//Adding two decimal numbers
+        bin = Binary(add);//Converting result to binary
+        cout<<bin<<" "<<temp1<<" "<<add;
+        return C;
+
+}
