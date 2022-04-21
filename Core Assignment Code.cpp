@@ -22,82 +22,108 @@ class base{
         return base(B.value - value );
     }
 
-    int val(char c)
+    long ConvertTo10(const string& input, int base)
     {
-        if (c >= '0' && c <= '9')
-            return (int)c - '0';
-        else
-            return (int)c - 'A' + 10;
-    }
-    
-    // Function to convert a number from given base 'b'
-    // to decimal
-    int toDeci(char *str, int base)
-    {
-        int len = strlen(str);
-        int power = 1; // Initialize power of base
-        int num = 0;  // Initialize result
-        int i;
-    
-        // Decimal equivalent is str[len-1]*1 +
-        // str[len-2]*base + str[len-3]*(base^2) + ...
-        for (i = len - 1; i >= 0; i--)
+        if(base < 2 || base > 36)
+            return 0;
+        
+        bool isNegative = (input[0] == '-');    
+
+        int startIndex = input.length()-1;
+        int endIndex   = isNegative ? 1 : 0;
+        
+        long value = 0;
+        int digitValue = 1;
+        
+        for(int i = startIndex; i >= endIndex; --i)
         {
-            // A digit in input number must be
-            // less than number's base
-            if (val(str[i]) >= base)
-            {
-            printf("Invalid Number");
-            return -1;
-            }
-    
-            num += val(str[i]) * power;
-            power = power * base;
+            char c = input[i];
+            
+            // Uppercase it - NOTE: could be done with std::toupper
+            if(c >= 'a' && c <= 'z')
+                c -= ('a' - 'A');
+            
+            // Convert char to int value - NOTE: could be done with std::atoi
+            // 0-9
+            if(c >= '0' && c <= '9')
+                c -= '0';
+            // A-Z
+            else
+                c = c - 'A' + 10;
+            
+            if(c >= base)
+                return 0;
+            
+            // Get the base 10 value of this digit    
+            value += c * digitValue;
+            
+            // Each digit has value base^digit position - NOTE: this avoids pow
+            digitValue *= base;
         }
-    
-        return num;
+        
+        if(isNegative)
+            value *= -1;
+        
+        return value;
     }
 
-        char reVal(int num)
+    // Convert base 10 to arbitrary base
+    // - Base must be between 2 and 36
+    // - If base is invalid, returns "0"
+    // - NOTE: this whole function could be done with itoa
+    string ConvertFrom10(long value, int base)
     {
-        if (num >= 0 && num <= 9)
-            return (char)(num + '0');
-        else
-            return (char)(num - 10 + 'A');
-    }
-    
-    // Utility function to reverse a string
-    void strev(char *str)
-    {
-        int len = strlen(str);
-        int i;
-        for (i = 0; i < len/2; i++)
+        if(base < 2 || base > 36)
+            return "0";
+        
+        bool isNegative = (value < 0);
+        if(isNegative)
+            value *= -1;
+        
+        // NOTE: it's probably possible to reserve string based on value
+        string output;
+        
+        do
         {
-            char temp = str[i];
-            str[i] = str[len-i-1];
-            str[len-i-1] = temp;
-        }
-    }
-    
-    // Function to convert a given decimal number
-    // to a base 'base' and
-    char* fromDeci(char res[], int base, int inputNum)
-    {
-        int index = 0;  // Initialize index of result
-    
-        // Convert input number is given base by repeatedly
-        // dividing it by base and taking remainder
-        while (inputNum > 0)
+            char digit = value % base;
+        
+            // Convert to appropriate base character
+            // 0-9
+            if(digit < 10)
+                digit += '0';
+            // A-Z
+            else
+                digit = digit + 'A' - 10;
+            
+            // Append digit to string (in reverse order)
+            output += digit;
+            
+            value /= base;
+            
+        } while (value > 0);
+        
+        if(isNegative)
+            output += '-';
+        
+        // Reverse the string - NOTE: could be done with std::reverse
+        int len = output.size() - 1;
+        for(int i = 0; i < len; ++i)
         {
-            res[index++] = reVal(inputNum % base);
-            inputNum /= base;
+            // Swap characters - NOTE: Could be done with std::swap
+            char temp = output[i];
+            output[i] = output[len-i];
+            output[len-i] = temp;
         }
-        res[index] = '\0';
-    
-        // Reverse the result
-        strev(res);
-    
-        return res;
+        
+        return output;
+    }
+
+    // Convert from one base to another
+    string ConvertBase(const string& input, int baseFrom, int baseTo)
+    {
+        // NOTE: There is probably a more efficient way to convert between two bases.
+        //       This however is easy to understand and debug.
+        return ConvertFrom10(ConvertTo10(input, baseFrom), baseTo);
     }
 
 };
