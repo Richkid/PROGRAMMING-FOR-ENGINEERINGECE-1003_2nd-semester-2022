@@ -10,6 +10,10 @@ class base{
         value = val;
     }
 
+    base(){
+        int value = 0; 
+    }
+
     base operator*(base B){
         return base(B.value * value);
     }
@@ -116,6 +120,8 @@ class base{
         }
         
         return output;
+
+        
     }
 
     // Convert from one base to another
@@ -126,31 +132,144 @@ class base{
         return ConvertFrom10(ConvertTo10(input, baseFrom), baseTo);
     }
 
+    void setValue(string val, string mode){
+        if (mode == "binary"){
+            this->value =  stoi(ConvertBase(val, 2, 10));
+        }
+        else if (mode == "octal"){
+            this->value =  stoi(ConvertBase(val, 8, 10));
+        }
+        else if (mode == "decimal"){
+            this->value =  stoi(ConvertBase(val, 10, 10));
+        }
+        else if (mode == "hexadecimal"){
+            this->value =  stoi(ConvertBase(val, 16, 10));
+        }
+    }
+
+    string getValue(string mode){
+        if (mode == "binary"){
+            return ConvertBase(to_string(this->value), 10, 2);
+        }
+        else if (mode == "octal"){
+            return ConvertBase(to_string(this->value), 10, 8);
+        }
+        else if (mode == "decimal"){
+            return ConvertBase(to_string(this->value), 10, 10);
+        }
+        else if (mode == "hexadecimal"){
+            return ConvertBase(to_string(this->value), 10, 16);
+        }
+
+        return "";
+    }
+
 };
 
 class binary  : public base{
     
-    binary(int val) : base (val) {
-
-    };
-
-    
-    void setValue (string val){
-        value = stoi(val, 0, 2)
-    };
-
-    string getValue (){
-        return 
+    public:
+    binary(string val) {
+        int num = stoi(ConvertBase(val, 2, 10));
+        this->value = num;
     }
 
+    binary(base val) {
+        int num = val.value;
+        this->value = num;
+    }
+
+    void setVal(string val){
+        setValue(val, "binary");
+    }
+
+    string getVal(){
+        return getValue("binary");
+    }
+    
+
+
+};
+
+class octal  : public base{
+    
+    public:
+    octal(string val) {
+        int num = stoi(ConvertBase(val, 8, 10));
+        this->value = num;
+    }
+
+    octal(base val) {
+        int num = val.value;
+        this->value = num;
+    }
+
+    void setVal(string val){
+        setValue(val, "octal");
+    }
+
+    string getVal(){
+        return getValue("octal");
+    }
+
+};
+
+class decimal  : public base{
+    
+    public:
+    decimal(string val) {
+        int num = stoi(ConvertBase(val, 10, 10));
+        this->value = num;
+    }
+
+    decimal(base val) {
+        int num = val.value;
+        this->value = num;
+    }
+
+    void setVal(string val){
+        setValue(val, "decimal");
+    }
+
+    string getVal(){
+        return getValue("decimal");
+    }
+
+};
+
+class hexadecimal  : public base{
+    
+    public:
+    hexadecimal(string val) {
+        int num = stoi(ConvertBase(val, 16, 10));
+        this->value = num;
+    }
+
+    hexadecimal(base val) {
+        int num = val.value;
+        this->value = num;
+    }
+
+    void setVal(string val){
+        setValue(val, "hexadecimal");
+    }
+
+    string getVal(){
+        return getValue("hexadecimal");
+    }
 
 };
 
 int main(){
     
-    base a = base(5); //101
-    base b = base(6); //110
-    base c = a * b; //111 -> 7
-    cout << (int)c.value << endl;
+    binary a = binary("01"); //101
+    octal b = octal("4567"); //110
+    decimal c = decimal("6789");
+    hexadecimal d = hexadecimal("ef");
+    
+    binary r = a + b;
+    
+    //binary c = a + b; //111 -> 7
+    cout << r.getVal() << endl;
     return 0;
 }
