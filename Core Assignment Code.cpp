@@ -262,14 +262,149 @@ class hexadecimal  : public base{
 
 int main(){
     
-    binary a = binary("01"); //101
-    octal b = octal("4567"); //110
-    decimal c = decimal("6789");
-    hexadecimal d = hexadecimal("ef");
+    //binary a = binary("01"); //101
+    //octal b = octal("4567"); //110
+   // decimal c = decimal("6789");
+   // hexadecimal d = hexadecimal("ef");
     
-    binary r = a + b;
+   // binary r = a + b;
     
     //binary c = a + b; //111 -> 7
-    cout << r.getVal() << endl;
+   // cout << r.getVal() << endl;
+
+   base numx, numy, numr;
+
+    int operation;
+   cout << "Please enter the correpsonding number for operation: \n  1 => addition \n 2 => multiplication \n 3 => subtraction" << endl;
+   cin >> operation;
+   while (operation < 1 || operation > 3){
+       cin >> operation;
+   }
+
+    cout << "please enter two numbers of serperated by space of either type binary, octal, decimal, hexadacimal" << endl;
+    cout << "to denote a base number put the prefrix first before value" << endl;
+    cout << "binary : 0b ---> eg: 0b101001" << endl;
+    cout << "octal : 0o ---> eg: 0o3627" << endl;
+    cout << "decimal : 0d  ---> eg: 0d6789" << endl;
+    cout << "binary : 0x ---> eg: 0xaf3c" << endl;
+    string x , y = "";
+    cin >> x >> y;
+
+    int xlevel = 0, ylevel = 0;
+    if (x.substr(0,2) == "0b"){
+        xlevel = 1;
+        numx = binary(x);
+    }
+    else if (x.substr(0,2) == "0o"){
+        xlevel = 2;
+        numx = octal(x);
+    }
+    else if (x.substr(0,2) == "0d"){
+        xlevel = 3;
+        numx = decimal(x);
+    }
+    else if (x.substr(0,2) == "0x"){
+        xlevel = 4;
+        numx = hexadecimal(x);
+    }
+
+    if (y.substr(0,2) == "0b"){
+        ylevel = 1;
+        numy = binary(y);
+    }
+    else if (y.substr(0,2) == "0o"){
+        ylevel = 2;
+        numy = octal(y);
+    }
+    else if (y.substr(0,2) == "0d"){
+        ylevel = 3;
+        numy = decimal(y);
+    }
+    else if (y.substr(0,2) == "0x"){
+        ylevel = 4;
+        numy = hexadecimal(y);
+    }
+
+    int rlevel;
+    if (xlevel > ylevel){
+        rlevel = xlevel;
+    }
+    else{
+        rlevel = ylevel;
+    }
+
+
+    string lvl = "";
+    if (rlevel == 1){
+        lvl = "binary";
+    }
+    else if (rlevel == 2){
+        lvl = "octal";
+    }
+    else if (rlevel == 3){
+        lvl = "decimal";
+    }
+    else if (rlevel == 4){
+        lvl = "hexadecimal";
+    }
+
+    if (operation == 1){
+        if (rlevel == 1){
+            binary res = numx + numy;
+            cout << "the resultant value is  " << lvl << " " << res.getVal() << endl;
+        }
+        else if (rlevel == 2){
+            octal res = numx + numy;
+            cout << "the resultant value is  " << lvl << " " << res.getVal() << endl;
+        }
+        else if (rlevel == 3){
+            decimal res = numx + numy;
+            cout << "the resultant value is  " << lvl << " " << res.getVal() << endl;
+        }
+        else if (rlevel == 4){
+            hexadecimal res = numx + numy;
+            cout << "the resultant value is  " << lvl << " " << res.getVal() << endl;
+        }
+    }
+    else if (operation == 2){
+        if (rlevel == 1){
+            binary res = numx * numy;
+           cout << "the resultant value is  " << lvl << " " << res.getVal() << endl;
+        }
+        else if (rlevel == 2){
+            octal res = numx * numy;
+            cout << "the resultant value is  " << lvl << " " << res.getVal() << endl;
+        }
+        else if (rlevel == 3){
+            decimal res = numx * numy;
+            cout << "the resultant value is  " << lvl << " " << res.getVal() << endl;
+        }
+        else if (rlevel == 4){
+            hexadecimal res = numx * numy;
+            cout << "the resultant value is  " << lvl << " " << res.getVal() << endl;
+        }
+    }
+    else if (operation == 3){
+        if (rlevel == 1){
+            binary res = numx - numy;
+            cout << "the resultant value is  " << lvl << " " << res.getVal() << endl;
+        }
+        else if (rlevel == 2){
+            octal res = numx - numy;
+            cout << "the resultant value is  " << lvl << " " << res.getVal() << endl;
+        }
+        else if (rlevel == 3){
+            decimal res = numx - numy;
+            cout << "the resultant value is  " << lvl << " " << res.getVal() << endl;
+        }
+        else if (rlevel == 4){
+            hexadecimal res = numx - numy;
+            cout << "the resultant value is  " << lvl << " " << res.getVal() << endl;
+        }
+    }
+
+    
+    
+
     return 0;
 }
