@@ -1,3 +1,16 @@
+/*
+Domonic Homphery 1207771
+Richard Clarke 0904223
+Tiffany Salmon   200261 
+C++ End of course code 
+Lect: Dr Chambers 
+4/20/2022
+
+
+*/
+
+
+
 #include <iostream>
 
 using namespace std;
